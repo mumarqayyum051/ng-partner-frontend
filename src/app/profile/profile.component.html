@@ -1,0 +1,278 @@
+<div class="main-wrapper h-100">
+  <div class="d-flex h-100">
+    <div class="sidebar" *ngIf="showMain">
+      <div class="main-card mb-5">
+        <div class="main-img"><img [src]="f.image.value || currentUser.image" alt="" /></div>
+        <div class="card-text" [ngClass]="isMenuCollapsed ? 'open' : ''">
+          <div class="position-relative">
+            <div class="fs-24 fw-700 text-gray text-truncate mt-3 mb-n2">
+              {{ currentUser?.firstName }} {{ currentUser?.lastName }}
+            </div>
+            <p class="fs-14 fw-600 text-light-gray">{{ currentUser?.designation || 'Not Filled Yet' }}</p>
+            <p class="fs-10 text-grey fw-500 line-clamp">{{ currentUser?.bio || 'Not Filled Yet' }}</p>
+            <div class="fs-10 text-grey fw-500">
+              <span class="text-gray fw-600">Partneur Status: </span>{{ currentUser?.partneurStatus || 'Not Filled Yet'
+              }}
+            </div>
+            <div class="tags">
+              <div class="fs-10 text-gray fw-600 my-2">Industry Interest</div>
+              <div class="d-flex flex-wrap">
+                <div class="tag" *ngFor="let industryInterest of currentUser?.industryInterest">
+                  {{ industryInterest || '' }}
+                </div>
+              </div>
+              <div class="fs-10 text-gray fw-600 my-2">Hobbies</div>
+              <div class="d-flex flex-wrap">
+                <div class="tag" *ngFor="let hobby of currentUser?.hobbies">{{ hobby || '' }}</div>
+              </div>
+              <div class="fs-10 text-gray fw-600 my-2">Skills</div>
+              <div class="d-flex flex-wrap">
+                <div class="tag" *ngFor="let skill of currentUser?.skills">{{ skill || '' }}</div>
+              </div>
+            </div>
+            <a href="javascript:void(0)" (click)="isMenuCollapsed = !isMenuCollapsed" class="line-btn">
+              <div class="line"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main" *ngIf="showDetails">
+      <div class="profile-detail">
+        <div class="profile-image mb-4" (click)="onClickProfilePicture()">
+          <img [src]="f.image.value" alt="" id="userImg" alt="profile picture" /><i class="fas fa-times"
+            *ngIf="f.image.value" (click)="f.image.reset()"></i>
+        </div>
+        <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"
+          *ngIf="fileUploading"></span>
+        <input type="file" id="file1" class="form-control d-none" accept="image/png, image/gif, image/jpeg" #input
+          ng2FileSelect [uploader]="uploader" (change)="onFileSelect($event)" />
+        <form class="row d-md-flex d-none" [formGroup]="form">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="row">
+                  <div class="col-lg-6 col-6 mb-3 mb-md-0">
+                    <div class="input-icon">
+                      <input type="text" class="profile-input" formControlName="firstName" placeholder="Firstname" />
+                      <i class="fas fa-times-circle" *ngIf="f.firstName.value" (click)="f.firstName.reset()"></i>
+                    </div>
+                    <errors [control]="f.firstName" [isSubmit]="isSubmit"></errors>
+                  </div>
+                  <div class="col-lg-6 col-6 mb-3 mb-md-0">
+                    <div class="input-icon">
+                      <input type="text" class="profile-input" formControlName="lastName" placeholder="Lastname" />
+                      <i class="fas fa-times-circle" *ngIf="f.lastName.value" (click)="f.lastName.reset()"></i>
+                    </div>
+                    <errors [control]="f.lastName" [isSubmit]="isSubmit"></errors>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="input-icon">
+                  <ng-select class="pro-select" [items]="industryInterest" bindLabel="name" bindValue="name"
+                    formControlName="industryInterest" [multiple]="true" placeholder="Industry Interest">
+                    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                      <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                        <span class="ng-value-label"> {{ item.name }}</span>
+                        <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                      </div>
+                      <div class="ng-value" *ngIf="items.length > 2">
+                        <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                      </div>
+                    </ng-template>
+                  </ng-select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 my-4">
+            <div class="input-icon">
+              <input type="email" class="profile-input" formControlName="email" placeholder="Email" [email]="true"
+                disabled />
+            </div>
+          </div>
+          <div class="col-lg-6 my-4">
+            <div class="input-icon">
+              <ng-select class="pro-select" [items]="skills" bindLabel="name" bindValue="name" [multiple]="true"
+                formControlName="skills" placeholder="Skills">
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                  <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                    <span class="ng-value-label"> {{ item.name }}</span>
+                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                  </div>
+                  <div class="ng-value" *ngIf="items.length > 2">
+                    <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                  </div>
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-4">
+            <div class="input-icon">
+              <input type="text" class="profile-input text-ellipsis" formControlName="bio" placeholder="Bio" />
+              <i class="fas fa-times-circle" *ngIf="f.bio.value" (click)="f.bio.reset()"></i>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-4">
+            <div class="input-icon">
+              <ng-select class="pro-select" [items]="hobbies" bindLabel="name" bindValue="name" [multiple]="true"
+                formControlName="hobbies" placeholder="Hobbies">
+                <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                  <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                    <span class="ng-value-label"> {{ item.name }}</span>
+                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                  </div>
+                  <div class="ng-value" *ngIf="items.length > 2">
+                    <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                  </div>
+                </ng-template>
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-4">
+            <div class="input-icon">
+              <input type="text" class="profile-input" formControlName="designation" placeholder="Title" />
+              <i class="fas fa-times-circle" *ngIf="f.designation.value" (click)="f.designation.reset()"></i>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-4"><input type="password" class="profile-input" placeholder="NEW PASSWORD"
+              formControlName="newPassword" /></div>
+          <div class="col-lg-6">
+            <div class="input-icon">
+              <ng-select class="pro-select" [items]="partneur_Status" bindLabel="name" bindValue="name"
+                formControlName="partneurStatus" placeholder="Partneur Status">
+              </ng-select>
+            </div>
+          </div>
+          <div class="col-lg-6"><input type="password" class="profile-input" placeholder="CONFIRM NEW PASSWORD"
+              formControlName="confirmNewPassword" /></div>
+        </form>
+
+        <form class="row d-md-none d-flex" [formGroup]="form">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-6 mb-4">
+                <div class="row">
+                  <div class="col-lg-6 col-6 mb-3 mb-md-0">
+                    <div class="input-icon">
+                      <input type="text" class="profile-input" formControlName="firstName" placeholder="Firstname" />
+                      <i class="fas fa-times-circle" *ngIf="f.firstName.value" (click)="f.firstName.reset()"></i>
+                    </div>
+                    <errors [control]="f.firstName" [isSubmit]="isSubmit"></errors>
+                  </div>
+                  <div class="col-lg-6 col-6 mb-3 mb-md-0">
+                    <div class="input-icon">
+                      <input type="text" class="profile-input" formControlName="lastName" placeholder="Lastname" />
+                      <i class="fas fa-times-circle" *ngIf="f.lastName.value" (click)="f.lastName.reset()"></i>
+                    </div>
+                    <errors [control]="f.lastName" [isSubmit]="isSubmit"></errors>
+                  </div>
+                </div>
+                <div class="my-4">
+                  <div class="input-icon">
+                    <input type="email" class="profile-input" formControlName="email" placeholder="Email" [email]="true"
+                      disabled />
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="input-icon">
+                    <input type="text" class="profile-input text-ellipsis" formControlName="bio" placeholder="Bio" />
+                    <i class="fas fa-times-circle" *ngIf="f.bio.value" (click)="f.bio.reset()"></i>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="input-icon">
+                    <input type="text" class="profile-input" formControlName="designation" placeholder="Title" />
+                    <i class="fas fa-times-circle" *ngIf="f.designation.value" (click)="f.designation.reset()"></i>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="input-icon">
+                    <ng-select class="pro-select" [items]="partneur_Status" bindLabel="name" bindValue="name"
+                      formControlName="partneurStatus" placeholder="Looking for founder">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="">
+                  <div class="input-icon">
+                    <ng-select class="pro-select" [items]="industryInterest" bindLabel="name" bindValue="name"
+                      formControlName="industryInterest" [multiple]="true" placeholder="Industry Interest">
+                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                        <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                          <span class="ng-value-label"> {{ item.name }}</span>
+                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                        </div>
+                        <div class="ng-value" *ngIf="items.length > 2">
+                          <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="my-4">
+                  <div class="input-icon">
+                    <ng-select class="pro-select" [items]="skills" bindLabel="name" bindValue="name" [multiple]="true"
+                      formControlName="skills" placeholder="Skills">
+                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                        <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                          <span class="ng-value-label"> {{ item.name }}</span>
+                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                        </div>
+                        <div class="ng-value" *ngIf="items.length > 2">
+                          <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="mb-4">
+                  <div class="input-icon">
+                    <ng-select class="pro-select" [items]="hobbies" bindLabel="name" bindValue="name" [multiple]="true"
+                      formControlName="hobbies" placeholder="Hobbies">
+                      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+                        <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                          <span class="ng-value-label"> {{ item.name }}</span>
+                          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                        </div>
+                        <div class="ng-value" *ngIf="items.length > 2">
+                          <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+                        </div>
+                      </ng-template>
+                    </ng-select>
+                  </div>
+                </div>
+                <div class="mb-4"><input type="password" class="profile-input" placeholder="NEW PASSWORD"
+                    formControlName="newPassword" /></div>
+                <div class=""><input type="password" class="profile-input" placeholder="CONFIRM NEW PASSWORD"
+                    formControlName="confirmNewPassword" /></div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="row justify-content-center my-3">
+          <div class="col-6">
+            <a class="btn save" (click)="onSubmit()">SAVE
+              <span class="spinner-border spinner-border-sm ml-2" role="status" aria-hidden="true"
+                *ngIf="isLoading"></span>
+            </a>
+          </div>
+          <div class="col-6"><a href="javascript:void(0)" class="btn cancel" (click)="onCancel()">CANCEL</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="back-icons">
+  <a href="javascript:void(0)" class="cog-icon">
+    <img src="assets/svg/edit.svg" alt="" height="50px  " *ngIf="showMain"
+      (click)="showDetails = true; showMain = false" />
+  </a>
+  <a>
+    <img src="assets/svg/back.svg" alt="" height="50px  " *ngIf="!showMain"
+      (click)="showDetails = false; showMain = true" />
+  </a>
+</div>

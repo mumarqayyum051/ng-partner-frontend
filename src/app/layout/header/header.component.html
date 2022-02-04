@@ -1,0 +1,107 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+  <a class="navbar-brand">
+    <img src="assets/login.logo.svg" height="40" class="mr-3" alt="" />
+    <span class="logo-text">{{ currentRoute | titlecase }}</span>
+  </a>
+  <button
+    class="navbar-toggler d-none"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="d-md-none d-inline-block"></div>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link d-inline-block" [routerLinkActive]="['active']" routerLink="/connect"
+          ><img src="assets/svg/connect-a.svg" class="img-2" alt="" /><img
+            class="img-1"
+            src="assets/svg/connect.svg"
+            alt=""
+        /></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-inline-block" [routerLinkActive]="['active']" routerLink="/network"
+          ><img src="assets/svg/network-a.svg" class="img-2" alt="" /><img
+            class="img-1"
+            src="assets/svg/network.svg"
+            alt=""
+        /></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-inline-block" [routerLinkActive]="['active']" routerLink="/inbox"
+          ><img src="assets/svg/inbox-a.svg" class="img-2" alt="" /><img
+            src="assets/svg/inbox.svg"
+            class="img-1"
+            alt=""
+        /></a>
+      </li>
+      <li class="nav-item">
+        <div ngbDropdown class="d-inline-block">
+          <a class="mr-0" id="dropdownBasic1" ngbDropdownToggle>
+            <a class="nav-link d-inline-block" [routerLinkActive]="['active']">
+              <span class="user">
+                <div class="user-img">
+                  <img [src]="currentUser?.image" alt="" />
+                </div>
+              </span>
+            </a>
+          </a>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <a class="d-block" [routerLink]="['/profile']" routerLinkActive="router-link-active" ngbDropdownItem
+              >Profile</a
+            >
+            <a class="d-block" ngbDropdownItem (click)="logout()">LOG OUT</a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<ul class="bottom-nav">
+  <li class="">
+    <a class="" [routerLinkActive]="['active']" routerLink="/connect"
+      ><img src="assets/svg/connect-a.svg" class="img-2" alt="" /><img
+        class="img-1"
+        src="assets/svg/connect.svg"
+        alt=""
+    /></a>
+  </li>
+  <li class="">
+    <a class="" [routerLinkActive]="['active']" routerLink="/network"
+      ><img src="assets/svg/network-a.svg" class="img-2" alt="" /><img
+        class="img-1"
+        src="assets/svg/network.svg"
+        alt=""
+    /></a>
+  </li>
+  <li class="">
+    <a class="" [routerLinkActive]="['active']" routerLink="/inbox"
+      ><img src="assets/svg/inbox-a.svg" class="img-2" alt="" /><img src="assets/svg/inbox.svg" class="img-1" alt=""
+    /></a>
+  </li>
+  <li class="">
+    <div ngbDropdown class="d-inline-block">
+      <a class="mr-0" id="dropdownBasic1" ngbDropdownToggle>
+        <a class="" [routerLinkActive]="['active']">
+          <span class="user">
+            <div class="user-img">
+              <img [src]="currentUser?.image" alt="" />
+            </div>
+          </span>
+        </a>
+      </a>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <a class="d-block" [routerLink]="['/profile']" routerLinkActive="router-link-active" ngbDropdownItem>Profile</a>
+        <a class="d-block" routerLink="/auth" ngbDropdownItem>LOG OUT</a>
+      </div>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,75 @@
+<div class="main-wrapper h-100">
+  <div class="d-flex h-100">
+    <div class="sidebar pr-2 pl-0">
+      <div class="input-icon mb-4 mx-3">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="SEARCH" [(ngModel)]="search" />
+      </div>
+      <div
+        class="users my-4"
+        [class.active]="friends.indexOf(friend) === selectedIndex"
+        *ngFor="let friend of friends | filter: search"
+        (click)="this.selectedIndex = friends.indexOf(friend)"
+      >
+        <div class="user-img"><img src="assets/user.jpg" alt="" /></div>
+        <div class="user-detail ml-3">
+          <div class="fs-14 fw-700 text-grey">{{ friend?.friend?.firstName }} {{ friend?.friend?.lasName }}</div>
+          <div class="fs-8 fw-400 text-grey">
+            <span class="text-grey fw-700">Status:</span>
+            <span class="text-grey"> {{ friend?.friend?.partneurStatus || 'No Status' }}</span>
+          </div>
+          <div class="fs-8 fw-400 text-grey">
+            <span class="text-grey fw-700">Skills:</span>
+            <span class="fw-700 text-blue"> {{ friend?.friend?.skills[0] }}</span>
+          </div>
+        </div>
+        <div class="ml-auto d-flex flex-column">
+          <div class="fs-8 fw-500 text-grey text-center">5 min ago</div>
+          <div class="fw-600 fs-16 text-grey" *ngIf="friend.status !== 'accepted'">
+            {{ friend?.status | uppercase }}
+          </div>
+          <i
+            class="fas fa-user-check"
+            *ngIf="friend.status === 'pending'"
+            (click)="changeRequestStatus(friend.friend._id, 'accepted')"
+          ></i>
+          <i class="fas fa-comment-alt" *ngIf="friend?.status === 'accepted'"></i>
+        </div>
+      </div>
+    </div>
+    <div class="main d-none" *ngIf="selectedUser !== null">
+      <div class="back">
+        <a href="javascript:void(0)" routerLink="/network" class="back-btn"><img src="assets/svg/back.svg" alt="" /></a>
+      </div>
+      <div class="main-card mb-5">
+        <div class="main-img"><img src="assets/user.jpg" alt="" /></div>
+        <div class="card-text">
+          <div class="fs-24 fw-700 text-gray">
+            {{ selectedUser?.friend.firstName }} {{ selectedUser?.friend?.lastName }}
+          </div>
+          <p class="fs-14 fw-500 text-light-gray">{{ selectedUser?.friend?.designation || 'No Designation' }}</p>
+          <p class="fs-10 text-grey">
+            {{ selectedUser?.bio || 'No Bio' }}
+          </p>
+          <div class="fs-10 text-grey">
+            <span class="text-gray fw-500">Partner Status:</span>
+            {{ selectedUser?.friend?.partneurStatus || 'No Partner Status' }}
+          </div>
+          <div class="icons" *ngIf="selectedUser.status === 'pending'">
+            <div>
+              <a href="javascvript:void(0)" class="bg-deny"
+                ><img src="assets/svg/close.png" alt="" (click)="changeRequestStatus(selectedUser._id, 'rejected')"
+              /></a>
+            </div>
+            <div class="line"></div>
+            <div>
+              <a href="javascvript:void(0)" class="bg-approve"
+                ><img src="assets/svg/approve.svg" alt="" (click)="changeRequestStatus(selectedUser._id, 'accepted')"
+              /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

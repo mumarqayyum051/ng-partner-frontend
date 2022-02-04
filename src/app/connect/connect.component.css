@@ -1,0 +1,289 @@
+.sidebar {
+  position: relative;
+  height: 100%;
+  width: 450px;
+}
+
+.main {
+  flex: 1;
+  padding: 40px 0px 0 10px;
+  background-color: #f4f4f4;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.main .container {
+  max-width: 1040px;
+}
+
+/* width */
+.main::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+.main::-webkit-scrollbar-track {
+}
+
+/* Handle */
+.main::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Handle on hover */
+.main::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
+/* width */
+.card-text.open::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.card-text.open::-webkit-scrollbar-track {
+}
+
+/* Handle */
+.card-text.open::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Handle on hover */
+.card-text.open::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
+.main-card {
+  border-radius: 40px;
+  width: 390px;
+  height: 650px;
+  margin: auto;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  box-shadow: 0px 0px 15px rgb(0 0 0 / 50%);
+  position: relative;
+  margin-top: 16px;
+}
+
+.main-img {
+  width: 100%;
+  height: 515px;
+}
+
+.main-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 40px;
+}
+
+.card-text {
+  background-color: #fff;
+  width: 100%;
+  height: 250px;
+  position: absolute;
+  bottom: 0;
+  border-radius: 40px;
+  transition: all 0.2s linear;
+}
+
+.card-text .position-relative {
+  padding: 40px;
+}
+
+.icons,
+.open-icons {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  position: absolute;
+  top: -35px;
+  padding: 0 45px;
+  width: 100%;
+  left: 0;
+}
+
+.line {
+  content: '';
+  height: 4px;
+  background-color: #a0a09f;
+  display: block;
+  width: 40px;
+  border-radius: 20px;
+  margin: 0 auto;
+}
+
+.card-text .line-btn {
+  position: absolute;
+  top: 12px;
+  width: 100%;
+  left: 0;
+  height: 20px;
+}
+
+.grid-card {
+  width: 185px;
+  height: 290px;
+  border-radius: 20px;
+  background-color: #fff;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  box-shadow: 0px 0px 15px rgb(0 0 0 / 50%);
+}
+
+.grid-img {
+  width: 100%;
+  height: 200px;
+}
+
+.grid-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+.grid-body {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 0 0 20px 20px;
+}
+
+.icons button,
+.open-icons button {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.icons button img,
+.open-icons button img {
+  width: 100%;
+  height: 100%;
+  border-radius: 100px;
+}
+
+.bg-deny {
+  background-color: #ed357d;
+}
+
+.bg-approve {
+  background-color: #13b5ce;
+}
+
+.open.card-text {
+  height: 450px;
+  transition: all 0.2s linear;
+  overflow-y: scroll;
+  padding-bottom: 0 !important;
+}
+
+.open .icons {
+  display: none;
+}
+
+.open-icons,
+.tags {
+  display: none;
+}
+
+.open.card-text .tags {
+  display: block;
+}
+
+.open .open-icons {
+  background: white;
+  padding-bottom: 30px;
+  display: flex;
+  position: sticky;
+  top: auto;
+  bottom: 0;
+}
+
+.tag {
+  height: 30px;
+  background-color: #efefef;
+  border-radius: 30px;
+  column-rule-color: #444444;
+  font-size: 8px;
+  font-weight: 700;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  white-space: nowrap;
+  margin-bottom: 10px;
+  margin-right: 5px;
+}
+
+.w-130 {
+  width: 130px;
+}
+
+@media (min-width: 1400px) {
+  .grid-card:nth-child(4),
+  .grid-card:nth-child(8) {
+    margin-right: 0px;
+  }
+
+  .grid-card:nth-child(5),
+  .grid-card:nth-child(6),
+  .grid-card:nth-child(7),
+  .grid-card:nth-child(8) {
+    margin-bottom: 0px;
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .main-card {
+    width: 100%;
+  }
+
+  .main {
+    display: none;
+  }
+  .icons,
+  .open-icons {
+    top: -65px;
+    padding: 0 5px;
+  }
+  .card-text .position-relative {
+    padding: 30px 0;
+  }
+/*   .d-flex.h-100 {
+    height: auto !important;
+  } */
+  .main-card {
+    margin-bottom: 80px !important;
+  }
+  .card-text {
+    padding: 30px;
+  }
+  .card-text .line-btn {
+    top: -12px;
+  }
+}
+
+button:active {
+  border: 1px solid rgba(255, 255, 255, 0.445);
+}
+button {
+  outline: none;
+  border: 0;
+}
+
+.opacity {
+  opacity: 0.5;
+}

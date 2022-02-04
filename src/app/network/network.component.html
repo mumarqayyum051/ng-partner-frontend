@@ -1,0 +1,133 @@
+<div class="main-wrapper h-100">
+  <div class="d-flex h-100">
+    <div class="sidebar" *ngIf="showList">
+      <div class="input-icon mb-4">
+        <i class="fas fa-search"></i>
+        <input type="text" placeholder="SEARCH" [(ngModel)]="search" />
+      </div>
+      <div
+        class="users my-2"
+        *ngFor="let friend of friends | filter: search; let i = index"
+        [class.active]="friends.indexOf(friend) === selectedIndex"
+      >
+        <a href="javascript:void(0)" class="d-inline-flex" (click)="onFriendClicked(friend, i); toggleView()">
+          <div class="user-img"><img [src]="friend?.friend?.image" alt="" /></div>
+          <div class="user-detail ml-3">
+            <div class="fs-14 fw-700 text-grey">{{ friend?.friend?.firstName }} {{ friend?.friend?.lasName }}</div>
+            <div class="fs-8 fw-400 text-grey">
+              <span class="text-grey fw-700">Status:</span>
+              <span class="text-grey"> {{ friend?.friend?.partneurStatus || 'No Status' }}</span>
+            </div>
+            <div class="fs-8 fw-400 text-grey">
+              <span class="text-grey fw-700">Skills:</span>
+              <span class="text-grey"> {{ friend?.friend?.skills.length === 0 ? 'No Skills' : friend?.friend?.skills[0] }}</span>
+            </div>
+          </div>
+        </a>
+        <div class="ml-auto d-flex flex-column">
+          <div class="fw-600 fs-12 text-grey" *ngIf="friend.status === 'pending' && friend.requestBy !== currentUser._id">
+            {{ 'Received Request' | titlecase }}
+          </div>
+          <div class="fw-600 fs-12 text-grey" *ngIf="friend.status === 'pending' && friend.requestBy === currentUser._id">
+            {{ 'Pending' }}
+          </div>
+        </div>
+        <div (click)="moveToMessage(friend)">
+          <img src="assets/svg/inbox.svg" height="50px" alt="chat" *ngIf="friend?.status === 'accepted'" />
+        </div>
+      </div>
+    </div>
+    <div class="main" *ngIf="showCards">
+      <no-content *ngIf="this.friends.length === 0"></no-content>
+
+      <div class="container">
+        <div class="d-flex flex-wrap justify-content-center">
+          <div class="grid-card" *ngFor="let friend of friends">
+            <div class="grid-img"><img [src]="friend?.friend?.image" alt="" /></div>
+            <div class="grid-body">
+              <div class="fs-14 fw-700 text-gray">{{ friend?.friend?.firstName }} {{ friend?.friend?.lasName }}</div>
+              <p class="fs-8 fw-500 text-light-gray mb-0">{{ friend?.friend?.designation }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main main2" *ngIf="showCard" (click)="preint()">
+      <no-content *ngIf="this.friends.length === 0"></no-content>
+
+      <div class="back">
+        <a class="back-btn" (click)="toggeleView2()"><img src="assets/svg/back.svg" alt="" /></a>
+      </div>
+      <div class="main-card mb-5">
+        <div class="main-img">
+          <img [src]="selectedUser?.friend?.image" alt="" />
+        </div>
+        <div class="card-text" [ngClass]="isMenuCollapsed ? 'open' : ''">
+          <div class="position-relative">
+            <div class="fs-24 fw-700 text-gray text-truncate mt-3 mb-n2">
+              {{ selectedUser?.friend?.firstName }} {{ selectedUser?.friend?.lastName }}
+            </div>
+            <p class="fs-14 fw-600 text-light-gray">{{ selectedUser?.friend?.designation || 'No Title' }}</p>
+            <!-- not available in backend yet -->
+            <p class="fs-10 text-grey fw-500 line-clamp">{{ selectedUser?.friend?.bio || 'No Bio' }}</p>
+            <div class="fs-10 text-grey fw-500">
+              <span class="text-gray fw-600">Partner Status: </span>{{ selectedUser?.friend?.partneurStatus || 'No Partneur Status' }}
+            </div>
+            <div class="tags">
+              <div class="fs-10 text-gray fw-600 my-2">Industry Interest</div>
+              <div class="d-flex flex-wrap">
+                <!-- <div class="tag mr-3">Professional, Scientific, and Technical Services</div> -->
+                <div class="tag" *ngFor="let industryInterest of selectedUser?.friend?.industryInterest">
+                  {{ industryInterest || 'No Industry Interest' }}
+                </div>
+              </div>
+              <div class="fs-10 text-gray fw-600 my-2">Hobbies</div>
+              <!-- <div class="tag mr-3">Professional, Scientific, and Technical Services</div> -->
+              <div class="d-flex flex-wrap">
+                <div class="tag" *ngFor="let hobby of selectedUser?.friend?.hobbies">{{ hobby || 'No Hobbies' }}</div>
+              </div>
+              <div class="fs-10 text-gray fw-600 my-2">Skills</div>
+              <div class="d-flex flex-wrap">
+                <div class="tag" *ngFor="let skill of selectedUser?.friend?.skills">{{ skill || 'No Skills' }}</div>
+              </div>
+            </div>
+            <div class="icons" *ngIf="this.selectedUser.requestBy.toString() !== currentUser._id.toString()">
+              <div *ngIf="this.selectedUser.status === 'pending'">
+                <a class="bg-deny" (click)="changeRequestStatus(selectedUser._id, 'reject')"
+                  ><img src="assets/svg/close.png" alt=""
+                /></a>
+              </div>
+              <div *ngIf="this.selectedUser.status === 'pending'">
+                <a class="bg-approve" (click)="changeRequestStatus(selectedUser._id, 'accepted')"
+                  ><img src="assets/svg/approve.svg" alt="" [disabled]="isLoading"
+                /></a>
+              </div>
+            </div>
+            <a href="javascript:void(0)" (click)="isMenuCollapsed = !isMenuCollapsed" class="line-btn">
+              <div class="line"></div>
+            </a>
+          </div>
+          <div class="open-icons" *ngIf="this.selectedUser.requestBy.toString() !== currentUser._id.toString()">
+            <div>
+              <a
+                class="bg-deny"
+                *ngIf="this.selectedUser.status === 'pending'"
+                (click)="changeRequestStatus(selectedUser._id, 'reject')"
+                ><img src="assets/svg/close.png" alt=""
+              /></a>
+            </div>
+            <div>
+              <a
+                class="bg-approve"
+                *ngIf="this.selectedUser.status === 'pending'"
+                (click)="changeRequestStatus(selectedUser._id, 'accepted')"
+                ><img src="assets/svg/approve.svg" alt=""
+              /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>

@@ -1,0 +1,203 @@
+.auth {
+  height: 100%;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent linear-gradient(45deg, #ed327d 0%, #ed3b73 25%, #ef535a 66%, #f26d40 100%) 0% 0% no-repeat
+    padding-box;
+}
+
+.login-btn,
+.sign-in-btn,
+.gradient-btn {
+  border-radius: 61px;
+  letter-spacing: 1.83px;
+  font-weight: 600;
+  font-size: 20px;
+  width: 150px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-btn {
+  border: 2px solid #fff;
+  color: #ffffff !important;
+}
+
+.sign-in-btn {
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+/* .login-btn.router-link-active {
+  background-color: #fff;
+  color: #f57f43 !important;
+} */
+.auth-main {
+  margin: 0 auto;
+  width: 550px;
+  height: 500px;
+  background-color: #fff;
+  padding: 40px 80px;
+  position: relative;
+}
+
+.auth-form {
+}
+
+.form-heading {
+  color: #5c6870;
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.auth-input {
+  outline: 0;
+  border: 0;
+  width: 100%;
+  border-bottom: 2px solid #cccbcb;
+  font-size: 14px;
+  padding: 8px 0;
+}
+
+.auth-input::placeholder {
+  font-size: 16px;
+  font-weight: 700;
+  color: #5c6870;
+}
+
+.forgot {
+  font-size: 16px;
+  color: #11b6cf;
+}
+
+.round {
+  position: relative;
+}
+
+.round label {
+  background-color: #fff;
+  border: 6.6px solid #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  height: 24px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 24px;
+}
+
+.round input[type='checkbox'] {
+  visibility: hidden;
+}
+
+.round input[type='checkbox']:checked + label {
+  background-color: #fff;
+  border-color: #11b6cf;
+}
+
+.round input[type='checkbox']:checked + label:after {
+  opacity: 1;
+}
+
+.gradient-btn {
+  background: transparent linear-gradient(45deg, #d9643c 0%, #f26d40 50%, #f47f43 100%) 0% 0% no-repeat padding-box;
+  color: #fff;
+  opacity: 0.5;
+}
+.gradient-btn-active {
+  background: transparent linear-gradient(45deg, #d9643c 0%, #f26d40 50%, #f47f43 100%) 0% 0% no-repeat padding-box;
+  color: #fff;
+  opacity: 1 !important;
+}
+a.active {
+  background-color: white !important;
+  color: #f57f43 !important;
+}
+.box-right-img {
+  bottom: -9px;
+  position: absolute;
+  right: -30px;
+  height: 167px;
+  width: 220px;
+  background-size: cover;
+  clip: rect(0,190px,160px,0);
+  background-image: url(../../../assets/login.logo.svg);
+}
+
+.auth-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.auth-footer ul li {
+  margin: 0 20px;
+}
+
+li a {
+  font-size: 20px;
+  color: #fff;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+.copyright {
+  color: #fff;
+  font-size: 16px;
+}
+
+@media (max-width: 992px) {
+  .auth-main {
+    width: 90%;
+    padding: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-btn {
+    font-size: 16px;
+  
+  }
+  .box-right-img {
+    height: 115px!important;
+    width: 150px!important;
+    clip: rect(0,127px,106px,0)!important;
+    right: -23px!important;
+  }
+  .auth-main {
+    height: auto;
+  }
+
+  .form-heading {
+    font-size: 24px;
+    text-align: left;
+  }
+  .auth-input::placeholder {
+    font-size: 14px;
+  }
+
+  .fs-14,
+  .forgot {
+    font-size: 12px !important;
+  }
+  a.active {
+    background-color: transparent !important;
+    color: white !important;
+  }
+}

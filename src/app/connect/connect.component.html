@@ -1,0 +1,97 @@
+<div class="main-wrapper h-100">
+  <div class="d-flex h-100">
+    <div class="sidebar" *ngIf="selectedUser !== null && selectedUser !== undefined">
+      <div class="main-card mb-5">
+        <div class="main-img">
+          <img *ngIf="selectedUser?.image !== ''" [src]="selectedUser?.image" alt="" />
+          <img *ngIf="selectedUser?.image === ''" src="assets/user.jpg" alt="" />
+        </div>
+        <div class="card-text" [ngClass]="isMenuCollapsed ? 'open' : ''">
+          <div class="position-relative">
+            <div class="fs-24 fw-700 text-gray text-truncate mt-3 mb-n2">
+              {{ selectedUser?.firstName }} {{ selectedUser?.lastName }}
+            </div>
+            <p class="fs-14 fw-600 text-light-gray">{{ selectedUser?.designation || 'No Title' }}</p>
+            <!-- not available in backend yet -->
+            <p class="fs-10 text-grey fw-500 line-clamp">{{ selectedUser?.bio || 'No Bio' }}</p>
+            <div class="fs-10 text-grey fw-500">
+              <span class="text-gray fw-600">Partner Status: </span
+              >{{ selectedUser?.partneurStatus || 'Not Status' }}
+            </div>
+            <div class="tags">
+              <div class="fs-10 text-gray fw-600 my-2">Industry Interest</div>
+              <div class="d-flex flex-wrap">
+                <!-- <div class="tag mr-3">Professional, Scientific, and Technical Services</div> -->
+                <div class="tag" *ngFor="let industryInterest of selectedUser?.industryInterest">
+                  {{ industryInterest === '' ? 'No Industry Interest' : industryInterest }}
+                  {{ industryInterest === '' }}
+                </div>
+              </div>
+              <div class="fs-10 text-gray fw-600 my-2">Hobbies</div>
+              <!-- <div class="tag mr-3">Professional, Scientific, and Technical Services</div> -->
+              <div class="d-flex flex-wrap">
+                <div class="tag" *ngFor="let hobby of selectedUser?.hobbies">{{ hobby === '' ? 'No Hobbies' : hobby }}</div>
+              </div>
+              <div class="fs-10 text-gray fw-600 my-2">Skills</div>
+              <div class="d-flex flex-wrap">
+                <div class="tag" *ngFor="let skill of selectedUser?.skills">{{ skill === '' ? 'No Skills' : skill }}</div>
+              </div>
+            </div>
+            <div class="icons">
+              <div>
+                <button class="bg-deny" (click)="getFriendsWithDelay()" [disabled]="disableIcons">
+                  <img src="assets/svg/close.png" alt="" [class.opacity]="disableIcons" />
+                </button>
+              </div>
+              <div>
+                <button
+                  class="bg-approve"
+                  (click)="sendRequestWithDelay()"
+                  [class.disabled]="isLoading"
+                  [disabled]="disableIcons"
+                >
+                  <img src="assets/svg/approve.svg" alt="" [class.opacity]="disableIcons" />
+                </button>
+              </div>
+            </div>
+            <a
+              href="javascript:void(0)"
+              href="javascript:void(0)"
+              (click)="isMenuCollapsed = !isMenuCollapsed"
+              class="line-btn"
+            >
+              <div class="line"></div>
+            </a>
+          </div>
+          <div class="open-icons">
+            <div>
+              <button class="bg-deny" (click)="getFriendsWithDelay()" [disabled]="disableIcons">
+                <img src="assets/svg/close.png" alt="" [class.opacity]="disableIcons" />
+              </button>
+            </div>
+            <div>
+              <button class="bg-approve" (click)="sendRequestWithDelay()" [disabled]="disableIcons">
+                <img src="assets/svg/approve.svg" alt="" [class.opacity]="disableIcons" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="main">
+      <div class="container">
+        <div class="d-flex flex-wrap justify-content-center">
+          <div class="grid-card" *ngFor="let connect of connects; let i = index" (click)="updateCard(i)">
+            <div class="grid-img"><img [src]="connect?.image" alt="" /></div>
+            <div class="grid-body">
+              <div class="fs-14 fw-700 text-gray text-truncate">{{ connect?.firstName }} {{ connect?.lastName }}</div>
+              <p class="fs-8 fw-500 text-light-gray mb-0">{{ connect?.designation || 'No Title' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <no-content *ngIf="!isLoading && this.connects.length === 0"></no-content>
+    </div>
+  </div>
+</div>
+<app-loader *ngIf="isLoading"></app-loader>

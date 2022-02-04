@@ -1,0 +1,25 @@
+<input
+  type="file"
+  ng2FileSelect
+  [uploader]="uploader"
+  [accept]="accept"
+  *ngIf="single"
+  class="d-none"
+  (change)="onFileSelected($event)"
+  #input
+/>
+<input
+  type="file"
+  ng2FileSelect
+  [uploader]="uploader"
+  multiple
+  *ngIf="multiple"
+  [accept]="accept"
+  class="d-none"
+  (change)="onFileSelected($event)"
+  #input
+/><br />
+<button (click)="this.outputType = 1; upload()">Upload</button>
+<button (click)="this.outputType = 2; upload()">ConvertToBase64</button>
+<button (click)="this.outputType = 3; upload()">Emit Object</button>
+<img [src]="imgView" />

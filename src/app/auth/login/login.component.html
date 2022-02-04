@@ -1,0 +1,86 @@
+<div class="auth">
+  <div class="auth-header">
+    <nav class="navbar navbar-light bg-transparent mt-4 mb-lg-5 mb-md-0 mb-3 pl-lg-4">
+      <img src="assets/header.logo.svg" alt="" class="d-md-inline-block d-none" width="200" />
+      <div class="logo d-inline-block d-md-none"><img src="assets/footer.logo.svg" alt="" /></div>
+      <div class="d-none d-md-block">
+        <ul class="navbar-nav align-items-center flex-md-row ml-auto">
+          <li class="">
+            <a class="btn login-btn active" [routerLink]="['/auth']" routerLinkActive="router-link-active">LOG IN</a>
+          </li>
+          <li class="ml-4">
+            <a class="btn sign-in-btn" [routerLink]="['/auth/register']" routerLinkActive="router-link-active"
+              >SIGN UP</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="d-block d-md-none">
+        <ul class="list-unstyled m-0 p-0 d-flex">
+          <li class="mr-3"><a href="javascript:void(0)" routerLink="/auth" class="fs-12 fw-600 active">LOG IN</a></li>
+          <li><a href="javascript:void(0)" routerLink="/auth/register" class="fs-12 fw-600">SIGN UP</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <div class="auth-main">
+    <div class="auth-form">
+      <div class="form-heading mb-5">Log in to Partneur</div>
+      <form [formGroup]="form">
+        <div class="mb-lg-5 mb-4">
+          <input type="email" class="auth-input" formControlName="email" placeholder="EMAIL" />
+          <errors [control]="f.email" [isSubmit]="isSubmit"></errors>
+        </div>
+        <div class="form-group">
+          <input type="password" class="auth-input" formControlName="password" placeholder="PASSWORD" />
+          <errors [control]="f.password" [isSubmit]="isSubmit"></errors>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-4 mb-5">
+          <div class="d-flex">
+            <div class="round">
+              <input type="checkbox" checked id="checkbox" formControlName="rememberMe" />
+              <label for="checkbox"></label>
+            </div>
+            <div class="text-gray fs-14 fw-700 ml-4">Remember Me</div>
+          </div>
+          <div><a href="javascript:void(0)" routerLink="forgot" class="forgot">Forgot password?</a></div>
+        </div>
+        <p style="color: red">{{ error }}</p>
+        <div>
+          <a class="btn gradient-btn" (click)="onSubmit()" [class.gradient-btn-active]="!form.invalid"
+            >LOG IN
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoading"></span>
+            <!-- <span class="sr-only" *ngIf="isLoading">Loading...</span> -->
+          </a>
+        </div>
+      </form>
+      <span class="box-right-img"></span>
+    </div>
+  </div>
+  <div class="auth-footer mt-4 mt-md-0">
+    <div class="row align-items-center mx-0">
+      <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+        <ul class="justify-content-center justify-content-lg-start">
+          <li>
+            <div class="logo d-none d-lg-block"><img src="assets/footer.logo.svg" alt="" /></div>
+          </li>
+          <li>
+            <a><i class="fab fa-facebook-f" (click)="shareOnFacebook(shareUrl)"></i></a>
+          </li>
+          <li>
+            <a (click)="shareOnInstagram(shareUrl, desc)"><i class="fab fa-instagram"></i></a>
+          </li>
+          <li>
+            <a (click)="shareOnTwitter(shareUrl, desc)"><i class="fab fa-twitter"></i></a>
+          </li>
+          <li>
+            <a (click)="shareOnLinkedIn(shareUrl, title, desc)"><i class="fab fa-linkedin-in"></i></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-lg-6 col-md-5">
+        <div class="copyright text-center">© 2022 <span class="fw-600">PARTNEUR</span> | All rights reserved</div>
+      </div>
+    </div>
+  </div>
+</div>
